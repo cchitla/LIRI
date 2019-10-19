@@ -10,7 +10,6 @@ var spotify = new Spotify(keys.spotify);
 let input = process.argv;
 let queryType = input[2];
 
-
 switch (queryType) {
     case "concert-this":
         let band = process.argv[3];
@@ -30,7 +29,7 @@ switch (queryType) {
     case "do-what-it-says":
 
         break;
-}
+};
 
 function getEvents(band) {
     let appID = "codingbootcamp";
@@ -38,13 +37,11 @@ function getEvents(band) {
     axios
         .get(queryURL)
         .then((response) => {
-            let event = response.data
-            event.forEach((element) => {
-                console.log(`Venue: ${element.venue.name}`);
-                console.log(`Location: ${element.venue.city, element.venue.region}`);
-                console.log(`Date: ${element.datetime}`);
-                console.log("=============");
-            });
+            let event = response.data[1];
+            console.log(`Venue: ${event.venue.name}`);
+            console.log(`Location: ${event.venue.city, event.venue.region}`);
+            console.log(`Date: ${event.datetime}`);
+            console.log("=============");
         })
         .catch((error) => {
             console.log(error);
@@ -74,9 +71,7 @@ function getMovie(movieName) {
     axios
         .get(queryURL)
         .then((response) => {
-            let result = response.data    
-            console.log(result);
-                    
+            let result = response.data;                    
             console.log(`
             Title: ${result.Title}
             Release Year: ${result.Year}
