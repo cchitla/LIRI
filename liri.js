@@ -5,11 +5,11 @@ const Spotify = require("node-spotify-api");
 const axios = require("axios");
 const moment = require("moment");
 
-
 var spotify = new Spotify(keys.spotify);
-// console.log(spotify);
 
-let queryType = process.argv[2];
+let input = process.argv;
+let queryType = input[2];
+
 
 switch (queryType) {
     case "concert-this":
@@ -18,18 +18,13 @@ switch (queryType) {
         break;
 
     case "spotify-this-song":
-        let input = process.argv;
-        // console.log(input.length);
-        // let songName = "The Sign"
-        // if (input.length < 4) {
-        //     getSong(songName);
-        // };
         songName = input.slice(3).join(" ");
         getSong(songName);
         break;
 
     case "movie-this":
-
+        movieName = input.slice(3).join(" ");
+        getMovie(movieName);
         break;
 
     case "do-what-it-says":
@@ -45,9 +40,10 @@ function getEvents(band) {
         .then((response) => {
             let event = response.data
             event.forEach((element) => {
-                console.log(element.venue.name);
-                console.log(element.venue.city, element.venue.region);
-                console.log(element.datetime);
+                console.log(`Venue: ${element.venue.name}`);
+                console.log(`Location: ${element.venue.city, element.venue.region}`);
+                console.log(`Date: ${element.datetime}`);
+                console.log("=============");
             });
         })
         .catch((error) => {
@@ -69,4 +65,29 @@ function getSong(songName) {
         console.log("Album:", response.album.name);
         console.log("Link:", response.external_urls.spotify);
     });
+};
+
+function getMovie(movieName) {
+    let title = movieName
+    let apiKEY = "2625b914"
+    let queryURL = `http://www.omdbapi.com/?i=tt3896198&apikey=${apiKEY}&t=${title}`
+    axios
+        .get(queryURL)
+        .then((response) => {
+            let result = response.data    
+            console.log(result);
+                    
+            console.log(`
+            Title: ${result.Title}
+            Release Year: ${result.Year}
+            IMDB Rating: ${result.imdbRating}
+            RT Rating: ${result.Ratings[1].Value}
+            Country: ${result.Country}
+            Languauge: ${result.Language}
+            Plot: ${result.Plot}
+            Actors: ${result.Actors}`);         
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 };
