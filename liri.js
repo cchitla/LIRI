@@ -46,10 +46,10 @@ function getEvents(band) {
         .get(queryURL)
         .then((response) => {
             let event = response.data[1];
-            console.log(`Venue: ${event.venue.name}`);
-            console.log(`Location: ${event.venue.city, event.venue.region}`);
-            console.log(`Date: ${event.datetime}`);
-            console.log("=============");
+            console.log(`
+            Venue: ${event.venue.name}
+            Location: ${event.venue.city, event.venue.region}
+            Date: ${event.datetime}`);
         })
         .catch((error) => {
             console.log(error);
@@ -65,10 +65,11 @@ function getSong(songName) {
             return console.log(err);
         };
         let response = (data.tracks.items[0]);
-        console.log("Band/artist:", response.artists[0].name);
-        console.log("Song name:", response.name);
-        console.log("Album:", response.album.name);
-        console.log("Link:", response.external_urls.spotify);
+        console.log(`
+        Band/artist: ${response.artists[0].name}
+        Song name: ${response.name}
+        Album: ${response.album.name}
+        Link: ${response.external_urls.spotify}`);
     });
 };
 
