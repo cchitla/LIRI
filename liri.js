@@ -9,27 +9,35 @@ var spotify = new Spotify(keys.spotify);
 
 let input = process.argv;
 let queryType = input[2];
+let query = input.slice(3).join(" ");
 
-switch (queryType) {
-    case "concert-this":
-        let band = process.argv[3];
-        getEvents(band);
-        break;
+runLIRI();
 
-    case "spotify-this-song":
-        songName = input.slice(3).join(" ");
-        getSong(songName);
-        break;
+function runLIRI() {
+    switch (queryType) {
+        case "concert-this":
+            getEvents(query);
+            break;
 
-    case "movie-this":
-        movieName = input.slice(3).join(" ");
-        getMovie(movieName);
-        break;
+        case "spotify-this-song":
+            getSong(query);
+            break;
 
-    case "do-what-it-says":
+        case "movie-this":
+            getMovie(query);
+            break;
 
-        break;
-};
+        case "do-what-it-says":
+            fs.readFile("./random.txt", "utf8", (err, data) => {
+                if (err) throw err;
+                let storedData = data.split(",")
+                queryType = storedData[0];
+                query = storedData[1];
+                runLIRI();
+            });
+            break;
+    };
+}
 
 function getEvents(band) {
     let appID = "codingbootcamp";
@@ -71,7 +79,7 @@ function getMovie(movieName) {
     axios
         .get(queryURL)
         .then((response) => {
-            let result = response.data;                    
+            let result = response.data;
             console.log(`
             Title: ${result.Title}
             Release Year: ${result.Year}
@@ -80,7 +88,7 @@ function getMovie(movieName) {
             Country: ${result.Country}
             Languauge: ${result.Language}
             Plot: ${result.Plot}
-            Actors: ${result.Actors}`);         
+            Actors: ${result.Actors}`);
         })
         .catch((err) => {
             console.log(err);
