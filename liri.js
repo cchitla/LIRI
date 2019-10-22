@@ -40,16 +40,17 @@ function runLIRI() {
 }
 
 function getEvents(band) {
-    let appID = "codingbootcamp";
+    let appID = keys.BandsInTown.appID;
     let queryURL = `https://rest.bandsintown.com/artists/${band}/events?app_id=${appID}`;
-    axios
-        .get(queryURL)
-        .then((response) => {
+    axios.get(queryURL).then((response) => {
             let event = response.data[1];
+            let responseDate = event.datetime.split("T")[0];
+            let momentDate = moment(responseDate, "YYYY-MM-DD");
+            let date = moment(momentDate).format("MM/DD/YYYY");
             console.log(`
             Venue: ${event.venue.name}
-            Location: ${event.venue.city, event.venue.region}
-            Date: ${event.datetime}`);
+            Location: ${event.venue.city}, ${event.venue.region}
+            Date: ${date}`);
         })
         .catch((error) => {
             console.log(error);
@@ -74,12 +75,10 @@ function getSong(songName) {
 };
 
 function getMovie(movieName) {
-    let title = movieName
-    let apiKEY = "2625b914"
+    let title = movieName;
+    let apiKEY = keys.OMDB.apiKEY;
     let queryURL = `http://www.omdbapi.com/?i=tt3896198&apikey=${apiKEY}&t=${title}`
-    axios
-        .get(queryURL)
-        .then((response) => {
+    axios.get(queryURL).then((response) => {
             let result = response.data;
             console.log(`
             Title: ${result.Title}
