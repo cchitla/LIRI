@@ -20,10 +20,16 @@ function runLIRI() {
             break;
 
         case "spotify-this-song":
+            if (!query) {
+                query = "The Sign"
+            };
             getSong(query);
             break;
 
         case "movie-this":
+            if (!query) {
+                query  = "Mr. Nobody"
+            };
             getMovie(query);
             break;
 
@@ -35,8 +41,10 @@ function runLIRI() {
                 query = storedData[1];
                 runLIRI();
             });
-            break;
+            break
     };
+    let log = `${queryType} ${query}; `
+    logCommand(log);
 }
 
 function getEvents(band) {
@@ -94,3 +102,9 @@ function getMovie(movieName) {
             console.log(err);
         })
 };
+
+function logCommand (log) {
+    fs.appendFile("log.txt", log, (err) => {
+        if (err) throw err;
+    });
+}
