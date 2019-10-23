@@ -7,9 +7,8 @@ const moment = require("moment");
 
 var spotify = new Spotify(keys.spotify);
 
-let input = process.argv;
-let queryType = input[2];
-let query = input.slice(3).join(" ");
+let queryType = process.argv[2];
+let query = process.argv.slice(3).join(" ");
 
 runLIRI();
 
@@ -20,32 +19,27 @@ function runLIRI() {
             break;
 
         case "spotify-this-song":
-            if (!query) {
-                query = "The Sign"
-            };
+            if (!query) query = "The Sign";
             getSong(query);
             break;
 
         case "movie-this":
-            if (!query) {
-                query  = "Mr. Nobody"
-            };
+            if (!query) query = "Mr. Nobody";
             getMovie(query);
             break;
 
         case "do-what-it-says":
             fs.readFile("./random.txt", "utf8", (err, data) => {
                 if (err) throw err;
-                let storedData = data.split(",")
-                queryType = storedData[0];
-                query = storedData[1];
+                queryType = data.split(",")[0];
+                query = data.split(",")[1];
                 runLIRI();
             });
-            break
+            break;
     };
     let log = `${queryType} ${query}; `
     logCommand(log);
-}
+};
 
 function getEvents(band) {
     let appID = keys.BandsInTown.appID;
@@ -72,7 +66,7 @@ function getSong(songName) {
     }, function (err, data) {
         if (err) {
             return console.log(err);
-        };
+        };        
         let response = (data.tracks.items[0]);
         console.log(`
         Band/artist: ${response.artists[0].name}
@@ -107,4 +101,4 @@ function logCommand (log) {
     fs.appendFile("log.txt", log, (err) => {
         if (err) throw err;
     });
-}
+};
