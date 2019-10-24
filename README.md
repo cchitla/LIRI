@@ -12,9 +12,9 @@ After installing NPM packages, the user will need to create a .env file to store
 **Using LIRI**
 
 LIRI will take in 4 different commands: 
-* concert-this __band/artist name__
-* spotify-this-song __song name__
-* movie-this __movie name__
+* concert-this *band/artist name*
+* spotify-this-song *song name*
+* movie-this *movie name*
 * do-what-it-says
 
 The commands must have a dash instead of spaces; the user query allows spaces. The do-what-it-says command will read a txt file and use data stored there to make a search. 
