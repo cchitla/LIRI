@@ -25,7 +25,7 @@ The commands must have a dash instead of spaces; the user query allows spaces. T
 **Example Searches**
 <img src="/images/concert.png">
 <img src="/images/spotify.png">
-<img src="/images/moive.png">
+<img src="/images/movie.png">
 <img src="/images/do-what-it-says.png">
 
 **Log File**
